@@ -71,3 +71,56 @@
 2.  **還原 NuGet 套件：** 在 Visual Studio 中，開啟 `Library_Login_Record.sln` 檔案，確保所有 NuGet 套件被成功還原。
 3.  **配置憑證：** 將 Google Sheets API 的憑證檔案放置於專案的指定位置，並修改程式碼中讀取憑證的路徑。
 4.  **建置與執行：** 在 Visual Studio 中建置 (Build) 專案，然後執行 (`F5`)。
+
+---
+# Library\_Login\_Record (Library Usage Registration System)
+
+## Project Overview
+
+The `Library_Login_Record` is a **Windows Forms (.NET Framework)** application designed for managing computer usage registration in a library setting.
+
+This system has been **live and operational** within the **Far Eastern Memorial Hospital Department of Education Library** (亞東紀念醫院教學部圖書館). With the consent of the management, this project is now open-sourced for reference by other organizations with similar tracking needs.
+
+The application aims to provide a simple and efficient method for tracking employee (or user) access to library computers and automating centralized data management.
+
+---
+
+## Key Features
+
+* **Employee ID Registration:** Quick entry for recording the user's employee ID number.
+* **Computer Tracking:** Automatic or manual recording of the specific computer number.
+* **Local CSV Backup:** All login/logout records are instantly saved to a local CSV file for reliable data backup.
+* **Google Sheets Integration:** Utilizes the Google Sheets API to synchronize and upload login records to a designated cloud spreadsheet for real-time centralized management and analysis.
+* **Stand-alone Deployment:** As a Windows Forms application, it can be deployed individually on each library computer.
+
+---
+
+## Architecture & Technology
+
+| Item | Description |
+| :--- | :--- |
+| **Type** | Windows Forms Application (WinForms) |
+| **Framework** | .NET Framework 4.7.2 (or higher) |
+| **Primary Language** | C\# |
+| **Database/Storage** | Local CSV Files / Google Sheets API |
+| **NuGet Dependencies** | Google.Apis.Sheets.v4, Newtonsoft.Json, etc. |
+
+---
+
+## Deployment and Installation
+
+### Prerequisites
+
+1.  **Visual Studio 2022** (Recommended)
+2.  **.NET Framework 4.7.2 SDK** or higher.
+3.  **Google Sheets API Key:** The Sheets API must be enabled on the Google Cloud Platform, and the corresponding Service Account Key (`client_secret.json` or other credential file) must be obtained.
+
+### Setup Steps
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [Your Repository URL]
+    ```
+2.  **Restore NuGet Packages:** Open the `Library_Login_Record.sln` file in Visual Studio and ensure all necessary NuGet packages are successfully restored.
+3.  **Configure Credentials:** Place the Google Sheets API credentials file in the designated project location and modify the code to correctly load the path to the credentials.
+4.  **Build and Run:** Build the project in Visual Studio and run it (`F5`).
