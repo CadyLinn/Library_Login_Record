@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -19,6 +21,8 @@ namespace Library_Login_Record
         TextBox txtEmployeeId, txtComputerId;
         Button btnSubmit;
         Panel pnlMain, headerPanel;
+
+        private Font _titleFont, _labelFont, _inputFont, _buttonFont;
 
         public Form1()
         {
@@ -41,11 +45,11 @@ namespace Library_Login_Record
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // 字型設定 
-            var titleFont = new Font("Microsoft JhengHei UI", 32, FontStyle.Bold);
-            var labelFont = new Font("Microsoft JhengHei UI", 16, FontStyle.Regular);
-            var inputFont = new Font("Microsoft JhengHei UI", 18);
-            var buttonFont = new Font("Microsoft JhengHei UI", 18, FontStyle.Bold);
+            // GDI 資源管理: 初始化 Font
+            _titleFont = new Font("Microsoft JhengHei UI", 32, FontStyle.Bold);
+            _labelFont = new Font("Microsoft JhengHei UI", 16, FontStyle.Regular);
+            _inputFont = new Font("Microsoft JhengHei UI", 18);
+            _buttonFont = new Font("Microsoft JhengHei UI", 18, FontStyle.Bold);
 
             // 主面板 - 白色卡片樣式
             pnlMain = new Panel
@@ -72,7 +76,7 @@ namespace Library_Login_Record
             lblTitle = new Label
             {
                 Text = "📚 圖書館電腦使用登記",
-                Font = titleFont,
+                Font = _titleFont,
                 ForeColor = System.Drawing.Color.White,
                 Width = pnlMain.Width,
                 Height = 80,
@@ -86,7 +90,7 @@ namespace Library_Login_Record
             lblEmployeeId = new Label
             {
                 Text = "👤 員工編號",
-                Font = labelFont,
+                Font = _labelFont,
                 ForeColor = System.Drawing.Color.FromArgb(44, 62, 80),
                 Width = 200,
                 Height = 30,
@@ -99,7 +103,7 @@ namespace Library_Login_Record
             // 員工編號 TextBox 
             txtEmployeeId = new RoundedTextBox
             {
-                Font = inputFont,
+                Font = _inputFont,
                 Multiline = false,
                 Width = 480,
                 Height = 50,
@@ -117,7 +121,7 @@ namespace Library_Login_Record
             lblComputerId = new Label
             {
                 Text = "💻 電腦編號",
-                Font = labelFont,
+                Font = _labelFont,
                 ForeColor = System.Drawing.Color.FromArgb(44, 62, 80),
                 Width = 200,
                 Height = 30,
@@ -130,7 +134,7 @@ namespace Library_Login_Record
             // 電腦編號 TextBox
             txtComputerId = new RoundedTextBox
             {
-                Font = inputFont,
+                Font = _inputFont,
                 Multiline = false,
                 Width = 480,
                 Height = 50,
@@ -148,7 +152,7 @@ namespace Library_Login_Record
             btnSubmit = new RoundedButton
             {
                 Text = "送出",
-                Font = buttonFont,
+                Font = _buttonFont,
                 Width = 200,
                 Height = 55,
                 Top = 420,
@@ -212,7 +216,7 @@ namespace Library_Login_Record
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string empId = txtEmployeeId.Text.Trim().ToUpper();
             string pcId = txtComputerId.Text.Trim();
@@ -235,34 +239,41 @@ namespace Library_Login_Record
                 return;
             }
 
-            string folderPath = @"C:\lib";
-            Directory.CreateDirectory(folderPath);
-            string fileName = Path.Combine(folderPath, $"LoginLog_{DateTime.Now:yyyyMM}.csv");
-            var utf8WithBom = new UTF8Encoding(true);
+            btnSubmit.Enabled = false;
+            btnSubmit.Text = "處理中...";
 
             try
             {
-                if (!File.Exists(fileName))
-                {
-                    string header = "登入時間,員工編號,電腦編號,電腦名稱";
-                    File.WriteAllText(fileName, header + Environment.NewLine, utf8WithBom);
-                }
+                string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LibraryLoginRecord");
+                Directory.CreateDirectory(appDataFolder);
+                string fileName = Path.Combine(appDataFolder, $"LoginLog_{DateTime.Now:yyyyMM}.csv");
+                var utf8WithBom = new UTF8Encoding(true);
 
                 string logEntry = $"'{DateTime.Now:yyyy-MM-dd HH:mm:ss},{empId},{pcId},{Environment.MachineName}";
-                File.AppendAllText(fileName, logEntry + Environment.NewLine, utf8WithBom);
 
-                GoogleSheetHelper.AppendRow(empId, pcId, Environment.MachineName);
+                await Task.Run(() =>
+                {
+                    if (!File.Exists(fileName))
+                    {
+                        string header = "\"登入時間\",\"員工編號\",\"電腦編號\",\"電腦名稱\"";
+                        File.WriteAllText(fileName, header + Environment.NewLine, utf8WithBom);
+                    }
+                    File.AppendAllText(fileName, logEntry + Environment.NewLine, utf8WithBom);
+                });
+
+                await GoogleSheetHelper.AppendRowAsync(empId, pcId, Environment.MachineName);
 
                 ShowCustomMessageBox("登入成功，資料已記錄與上傳！", "登入成功", MessageBoxIcon.Information);
                 Application.Exit();
             }
-            catch (IOException ioex)
-            {
-                ShowCustomMessageBox("檔案正在被其他程式使用，請關閉後再試！\n" + ioex.Message, "檔案錯誤", MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                ShowCustomMessageBox("發生其他錯誤：\n" + ex.Message, "系統錯誤", MessageBoxIcon.Error);
+                ShowCustomMessageBox($"發生錯誤，請聯絡管理員。\n\n詳細資訊: {ex.Message}", "系統錯誤", MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnSubmit.Enabled = true;
+                btnSubmit.Text = "送出";
             }
         }
 
@@ -285,6 +296,20 @@ namespace Library_Login_Record
             {
                 e.Handled = true;
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _titleFont?.Dispose();
+                _labelFont?.Dispose();
+                _inputFont?.Dispose();
+                _buttonFont?.Dispose();
+                // components is defined in Form1.Designer.cs
+                components?.Dispose(); 
+            }
+            base.Dispose(disposing);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -393,44 +418,44 @@ namespace Library_Login_Record
 
     public static class GoogleSheetHelper
     {
-        static string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        static string ApplicationName = "Login Logger";
-        static string SpreadsheetId = "";
-        static string SheetName = "libRecord";
-        static string CredentialPath = @"C:\";
+        private static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
+        private static readonly string ApplicationName = "LibraryLoginLogger";
 
-        private static SheetsService GetSheetsService()
+        private static readonly string SpreadsheetId = ConfigurationManager.AppSettings["GoogleSpreadsheetId"];
+        private static readonly string CredentialPath = ConfigurationManager.AppSettings["GoogleCredentialPath"];
+        private static readonly string SheetName = "libRecord";
+
+        private static readonly Lazy<SheetsService> _service = new Lazy<SheetsService>(InitializeService);
+        private static SheetsService Service => _service.Value;
+
+        private static SheetsService InitializeService()
         {
-            try
+            if (string.IsNullOrEmpty(SpreadsheetId) || string.IsNullOrEmpty(CredentialPath))
             {
-                if (!File.Exists(CredentialPath))
-                {
-                    MessageBox.Show("找不到憑證檔案：" + CredentialPath);
-                    throw new FileNotFoundException("Google 憑證不存在", CredentialPath);
-                }
-
-                GoogleCredential credential;
-                using (var stream = new FileStream(CredentialPath, FileMode.Open, FileAccess.Read))
-                {
-                    credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
-                }
-
-                return new SheetsService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = credential,
-                    ApplicationName = ApplicationName,
-                });
+                throw new ConfigurationErrorsException("App.config 中未設定 'GoogleSpreadsheetId' 或 'GoogleCredentialPath'。");
             }
-            catch (Exception ex)
+
+            if (!File.Exists(CredentialPath))
             {
-                MessageBox.Show("初始化 SheetsService 發生錯誤：\n" + ex.Message + "\n\n" + ex.StackTrace);
-                throw;
+                throw new FileNotFoundException($"找不到指定的憑證檔案: {Path.GetFullPath(CredentialPath)}", CredentialPath);
             }
+
+            GoogleCredential credential;
+            using (var stream = new FileStream(CredentialPath, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+            }
+
+            return new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
         }
 
-        public static void AppendRow(string empId, string pcId, string machineName)
+        public static async Task AppendRowAsync(string empId, string pcId, string machineName)
         {
-            var service = GetSheetsService();
+            var service = Service;
             var range = $"{SheetName}!A:D";
 
             var objectList = new List<object>
@@ -448,7 +473,8 @@ namespace Library_Login_Record
 
             var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadsheetId, range);
             appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-            appendRequest.Execute();
+            
+            await appendRequest.ExecuteAsync();
         }
     }
 }
