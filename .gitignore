@@ -416,3 +416,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+credentials.json
+*.json
+librecord-467301-0340baac9a76.json
