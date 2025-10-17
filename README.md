@@ -1,17 +1,18 @@
 # 📚 Library_Login_Record：圖書館電腦使用登記系統
 
-##  目錄
+## 📋 目錄
 
-1.  [ 專案摘要 (Project Abstract)](#-專案摘要-project-abstract)
-2.  [ 核心功能 (Key Features)](#-核心功能-key-features)
-3.  [ 安裝與設定 (Installation Guide)](#-安裝與設定-installation-guide)
+1.  [📄 專案摘要 (Project Abstract)](#-專案摘要-project-abstract)
+2.  [💡 核心功能 (Key Features)](#-核心功能-key-features)
+3.  [🛠 安裝與設定 (Installation Guide)](#-安裝與設定-installation-guide)
     * [必要條件 (Prerequisites)](#1-必要條件-prerequisites)
     * [下載與專案配置 (Setup)](#2-下載與專案配置-setup)
-4.  [ 使用方式 (Usage)](#-使用方式-usage)
-5.  [ 聯絡與授權 (Contact & License)](#-聯絡與授權-contact--license)
+4.  [🚀 使用方式 (Usage)](#-使用方式-usage)
+5.  [🔗 聯絡與授權 (Contact & License)](#-聯絡與授權-contact--license)
 
 ---
-##  專案摘要 (Project Abstract)
+
+## 📄 專案摘要 (Project Abstract)
 
 **Library_Login_Record** 是一個基於 **Windows Forms (.NET Framework 4.8)** 平台所開發的桌面應用程式，旨在提供一個高效、自動化的解決方案，用於追蹤圖書館或公共電腦的使用記錄。
 
@@ -21,7 +22,7 @@
 
 ---
 
-##  核心功能 (Key Features)
+## 💡 核心功能 (Key Features)
 
 | 功能項目 | 描述 |
 | :--- | :--- |
@@ -33,20 +34,20 @@
 
 ---
 
-##  安裝與設定 (Installation Guide)
+## 🛠 安裝與設定 (Installation Guide)
 
 ### 1. 必要條件 (Prerequisites)
 
 * **運行環境：** 需安裝 **.NET Framework 4.8**。
 * **Google Sheets API 憑證：** 必須在 Google Cloud Platform (GCP) 上執行以下步驟：
-    1. 建立一個 GCP 專案並啟用 **Google Sheets API**。
-    2. 建立並下載 **服務帳戶 (Service Account)** 的 JSON 憑證金鑰。
+    1.  建立一個 GCP 專案並啟用 **Google Sheets API**。
+    2.  建立並下載 **服務帳戶 (Service Account)** 的 JSON 憑證金鑰。
 
 ### 2. 下載與專案配置 (Setup)
 
 1.  **克隆專案：**
     ```bash
-    git clone [https://github.com/CadyLinn/Library_Login_Record.git]
+    git clone [https://github.com/CadyLinn/Library_Login_Record.git](https://github.com/CadyLinn/Library_Login_Record.git)
     ```
 2.  **還原 NuGet 套件：**
     * 在 Visual Studio (建議 2022) 中開啟 `Library_Login_Record.sln` 檔案，確保所有 NuGet 套件被自動或手動還原。
@@ -67,7 +68,7 @@
 
 ---
 
-##  使用方式 (Usage)
+## 🚀 使用方式 (Usage)
 
 1.  **啟動應用程式：** 執行 `Library_Login_Record.exe` 檔案。
 2.  **輸入資料：**
@@ -81,7 +82,7 @@
 
 ---
 
-##  聯絡與授權 (Contact & License)
+## 🔗 聯絡與授權 (Contact & License)
 
 | 項目 | 資訊 |
 | :--- | :--- |
