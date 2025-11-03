@@ -13,19 +13,19 @@
 
 ---
 
-## 📋 目錄
+## 目錄
 
-1.  [📄 專案摘要與業務價值 (Project Abstract & Business Value)](#-專案摘要與業務價值-project-abstract--business-value)
-2.  [💡 核心功能與演示 (Key Features & Demo)](#-核心功能與演示-key-features--demo)
-3.  [🛠 安裝與配置指南 (Installation & Configuration Guide)](#-安裝與配置指南-installation--configuration-guide)
+1.  [專案摘要與業務價值 (Project Abstract & Business Value)](#-專案摘要與業務價值-project-abstract--business-value)
+2.  [核心功能與演示 (Key Features & Demo)](#-核心功能與演示-key-features--demo)
+3.  [安裝與配置指南 (Installation & Configuration Guide)](#-安裝與配置指南-installation--configuration-guide)
     * [必要條件 (Prerequisites)](#1-必要條件-prerequisites)
     * [專案配置 (Setup & Configuration)](#2-專案配置-setup--configuration)
-4.  [🚀 操作流程 (Usage Workflow)](#-操作流程-usage-workflow)
-5.  [🔗 聯絡與授權 (Contact & License)](#-聯絡與授權-contact--license)
+4.  [操作流程 (Usage Workflow)](#-操作流程-usage-workflow)
+5.  [聯絡與授權 (Contact & License)](#-聯絡與授權-contact--license)
 
 ---
 
-## 📄 專案摘要與業務價值 (Project Abstract & Business Value)
+## 專案摘要與業務價值 (Project Abstract & Business Value)
 
 **Library_Login_Record** 是一個專為 Windows 桌面環境設計的數據記錄應用程式。本專案的目標是提供一個**高效、零維護、易於部署**的解決方案，用於追蹤公共電腦（如圖書館、研討室）的使用情況。
 
@@ -37,7 +37,7 @@
 
 ---
 
-## 💡 核心功能與演示 (Key Features & Demo)
+## 核心功能與演示 (Key Features & Demo)
 
 | 功能項目 | 描述 (功能亮點) |
 | :--- | :--- |
@@ -47,13 +47,13 @@
 | **高容錯性備份** | 所有記錄同步儲存於本地 CSV 檔案，作為網路離線或 API 故障時的備份。 |
 | **獨立部署能力** | 應用程式為 WinForms 單獨執行檔，支援在任何 Windows 電腦上獨立運行。 |
 
-### 📈 操作演示
+### 操作演示
 
 ![Library Login Record 操作演示](assets/demo.gif)
 
 ---
 
-## 🛠 安裝與配置指南 (Installation & Configuration Guide)
+## 安裝與配置指南 (Installation & Configuration Guide)
 
 ### 1. 必要條件 (Prerequisites)
 
@@ -88,7 +88,7 @@
 
 ---
 
-## 🚀 操作流程 (Usage Workflow)
+## 操作流程 (Usage Workflow)
 
 本應用程式設計為流程簡潔、單次執行。
 
@@ -104,7 +104,7 @@
 
 ---
 
-## 🔗 聯絡與授權 (Contact & License)
+## 聯絡與授權 (Contact & License)
 
 | 項目 | 資訊 |
 | :--- | :--- |
