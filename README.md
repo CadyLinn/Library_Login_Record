@@ -15,14 +15,13 @@
 
 ## 目錄
 
-1.  [專案摘要與業務價值 (Project Abstract & Business Value)](#-專案摘要與業務價值-project-abstract--business-value)
-2.  [核心功能與演示 (Key Features & Demo)](#-核心功能與演示-key-features--demo)
-3.  [安裝與配置指南 (Installation & Configuration Guide)](#-安裝與配置指南-installation--configuration-guide)
+1. [專案摘要與業務價值 (Project Abstract & Business Value)](#專案摘要與業務價值-project-abstract--business-value)
+2. [核心功能與演示 (Key Features & Demo)](#核心功能與演示-key-features--demo)
+3. [安裝與配置指南 (Installation & Configuration Guide)](#安裝與配置指南-installation--configuration-guide)
     * [必要條件 (Prerequisites)](#1-必要條件-prerequisites)
     * [專案配置 (Setup & Configuration)](#2-專案配置-setup--configuration)
-4.  [操作流程 (Usage Workflow)](#-操作流程-usage-workflow)
-5.  [聯絡與授權 (Contact & License)](#-聯絡與授權-contact--license)
-
+4. [操作流程 (Usage Workflow)](#操作流程-usage-workflow)
+5. [聯絡與授權 (Contact & License)](#聯絡與授權-contact--license)
 ---
 
 ## 專案摘要與業務價值 (Project Abstract & Business Value)
